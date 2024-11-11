@@ -11,7 +11,7 @@ export default function Header() {
         <a
           href={"http://github.com/gabrielfel1x"}
           target="_blank"
-          className="absolute left-2/4"
+          className="absolute left-2/4 invisible sm:visible"
         >
           <img src="github.svg" alt="github" width={34} height={34} />
         </a>
