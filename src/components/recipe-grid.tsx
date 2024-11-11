@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { getRandomMeal } from "../services/meal-service";
+import { getRandomMeals } from "../services/meal-service";
 import { Meal } from "../types/meal";
 import { Link } from "react-router-dom";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { SkeletonCard } from "./loaders/skeleton-card";
 
 export function RecipeGrid() {
   const [randomMeals, setRandomMeals] = useState<Meal[]>([]);
@@ -12,16 +11,12 @@ export function RecipeGrid() {
   useEffect(() => {
     const fetchRandomMeals = async () => {
       setLoading(true);
-      const meals: Meal[] = [];
-
-      for (let i = 0; i < 12; i++) {
-        const randomMeal = await getRandomMeal();
-        if (randomMeal) {
-          meals.push(randomMeal);
-        }
+      try {
+        const meals = await getRandomMeals(12);
+        setRandomMeals(meals);
+      } finally {
+        setLoading(false);
       }
-      setRandomMeals(meals);
-      setLoading(false);
     };
 
     fetchRandomMeals();
@@ -33,11 +28,7 @@ export function RecipeGrid() {
         <h2 className="font-bold text-xl">Receitas</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {Array.from({ length: 12 }).map((_, index) => (
-            <div key={index} className="border rounded-lg p-4 shadow-md">
-              <Skeleton height={160} className="mb-2" />
-              <Skeleton width="80%" height={24} />
-              <Skeleton width="60%" height={16} />
-            </div>
+            <SkeletonCard key={index} />
           ))}
         </div>
       </div>
@@ -46,11 +37,11 @@ export function RecipeGrid() {
 
   return (
     <div className="space-y-6 py-12">
-      <h2 className="font-bold text-xl">Receitas</h2>
+      <h2 className="font-bold text-xl">Sugestões para você:</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {randomMeals.map((meal) => (
           <Link key={meal.idMeal} to={`/recipe/${meal.idMeal}`}>
-            <div className="border rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
+            <div className="border rounded-lg p-4 shadow-md hover:shadow-xl transition-shadow duration-300 hover:scale-105 transform">
               <img
                 src={meal.strMealThumb}
                 alt={meal.strMeal}

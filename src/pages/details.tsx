@@ -6,8 +6,7 @@ import ExpandableCard from "../components/expandable-card";
 import IngredientList from "../components/ingredient-list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import ClipLoaderComponent from "../components/loaders/clip";
 
 export default function RecipeDetail() {
   const { id } = useParams<{ id: string }>();
@@ -32,23 +31,7 @@ export default function RecipeDetail() {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="container mx-auto p-6 md:p-12 bg-card shadow-xl rounded-lg">
-        <div className="relative bg-cover bg-center rounded-lg overflow-hidden h-72 md:h-96">
-          <Skeleton height="100%" />
-        </div>
-        <Skeleton width="30%" height={30} className="mt-4" />
-        <div className="flex flex-col md:flex-row gap-8 mt-6">
-          <div className="flex-1">
-            <Skeleton height={300} />
-          </div>
-          <div className="flex-1">
-            <Skeleton width="70%" height={25} count={3} className="mb-4" />
-          </div>
-        </div>
-        <Skeleton height={100} />
-      </div>
-    );
+    return <ClipLoaderComponent color="black" size={40} />;
   }
 
   if (!meal) {
@@ -63,6 +46,12 @@ export default function RecipeDetail() {
 
   return (
     <div className="container mx-auto p-6 md:p-12 bg-card shadow-xl rounded-lg">
+      <button
+        onClick={() => window.history.back()}
+        className="mb-4 bg-primary text-white px-4 py-2 rounded-lg shadow hover:bg-destructive-foreground transition flex items-center gap-2"
+      >
+        <FontAwesomeIcon icon={faArrowLeft} /> Voltar
+      </button>
       <div
         className="relative bg-cover bg-center rounded-lg overflow-hidden h-72 md:h-96"
         style={{ backgroundImage: `url(${meal.strMealThumb})` }}
@@ -74,14 +63,7 @@ export default function RecipeDetail() {
         </div>
       </div>
 
-      <button
-        onClick={() => window.history.back()}
-        className="mt-4 bg-primary text-white px-4 py-2 rounded-lg shadow hover:bg-destructive-foreground transition flex items-center gap-2"
-      >
-        <FontAwesomeIcon icon={faArrowLeft} /> Voltar
-      </button>
-
-      <div className="flex flex-col md:flex-row gap-8 mt-6">
+      <div className="flex flex-col md:flex-row gap-8 mt-12">
         <div className="flex-1">
           <img
             src={meal.strMealThumb}
@@ -99,14 +81,16 @@ export default function RecipeDetail() {
             </p>
           </div>
 
-          <ExpandableCard title="Instruções" content={meal.strInstructions} />
+          <ExpandableCard
+            title="Instruções de preparo"
+            content={meal.strInstructions}
+          />
+          <ExpandableCard
+            title="Ingredientes"
+            content={<IngredientList meal={meal} />}
+          />
         </div>
       </div>
-
-      <ExpandableCard
-        title="Ingredientes"
-        content={<IngredientList meal={meal} />}
-      />
     </div>
   );
 }

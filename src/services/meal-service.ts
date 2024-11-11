@@ -29,6 +29,12 @@ export const getRandomMeal = async (): Promise<Meal> => {
   return response.data.meals[0];
 };
 
+export const getRandomMeals = async (count: number): Promise<Meal[]> => {
+  const mealPromises = Array.from({ length: count }, () => getRandomMeal());
+  const meals = await Promise.all(mealPromises);
+  return meals.filter(Boolean);
+};
+
 export const getMealCategories = async (): Promise<MealCategory[]> => {
   const response = await api.get(GET_MEAL_CATEGORIES());
   return response.data.categories;
