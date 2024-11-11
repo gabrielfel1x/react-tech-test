@@ -17,7 +17,7 @@ const IngredientList: React.FC<IngredientListProps> = ({ meal }) => {
             meal[`strMeasure${key.replace("strIngredient", "")}` as keyof Meal];
           return (
             <li key={index} className="mb-1">
-              <span className="font-semibold">{ingredient}</span> -{" "}
+              <span className="font-semibold">{ingredient}</span> -
               <span>{measure}</span>
             </li>
           );

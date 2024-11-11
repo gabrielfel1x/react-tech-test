@@ -34,7 +34,7 @@ export default function Hero() {
           setMeals(fetchedMeals);
         }
       } catch (err) {
-        setError("Nenhuma receita referente à sua pesquisa foi encontrada");
+        setError("No recipes matching your search were found.");
         console.log(err);
       } finally {
         setLoading(false);
@@ -48,23 +48,23 @@ export default function Hero() {
   return (
     <section className="py-12">
       <h1 className="text-4xl font-bold text-center">
-        Descubra as melhores <br />
-        receitas culinárias
+        Discover the best <br />
+        culinary recipes
       </h1>
-      <p className="text-center text-muted-foreground">Para o seu paladar</p>
+      <p className="text-center text-muted-foreground">For your taste</p>
       <form className="container flex flex-col sm:flex-row gap-2 mt-4 max-w-2xl mx-auto">
         <select
           className="border border-input rounded-md p-2"
           value={searchType}
           onChange={(e) => setSearchType(e.target.value as "name" | "category")}
         >
-          <option value="name">Buscar por Nome</option>
-          <option value="category">Buscar por Categoria</option>
+          <option value="name">Search by Name</option>
+          <option value="category">Search by Category</option>
         </select>
         <input
           type="search"
           className="border border-input w-full py-2 px-3 rounded-md"
-          placeholder="Digite para buscar"
+          placeholder="Type to search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -77,7 +77,7 @@ export default function Hero() {
       ) : error ? (
         <p className="text-destructive text-center mt-4">{error}</p>
       ) : searchCompleted && meals.length === 0 ? (
-        <p className="text-center text-muted">Nenhuma receita encontrada.</p>
+        <p className="text-center text-muted">No recipes found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
           {meals.map((meal) => (

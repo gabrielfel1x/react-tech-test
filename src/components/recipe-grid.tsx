@@ -25,9 +25,9 @@ export function RecipeGrid() {
   if (loading) {
     return (
       <div className="space-y-6 py-12">
-        <h2 className="font-bold text-xl">Receitas</h2>
+        <h2 className="font-regular text-lg text-center">Loading recipes...</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {Array.from({ length: 12 }).map((_, index) => (
+          {Array.from({ length: 4 }).map((_, index) => (
             <SkeletonCard key={index} />
           ))}
         </div>
@@ -37,7 +37,7 @@ export function RecipeGrid() {
 
   return (
     <div className="space-y-6 py-12">
-      <h2 className="font-bold text-xl">Sugestões para você:</h2>
+      <h2 className="font-bold text-xl">Suggestions for you:</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {randomMeals.map((meal) => (
           <Link key={meal.idMeal} to={`/recipe/${meal.idMeal}`}>
