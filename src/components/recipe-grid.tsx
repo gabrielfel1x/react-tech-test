@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { getRandomMeal } from "../services/meal-service";
 import { Meal } from "../types/meal";
 import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-export function RecipeGridLayout() {
+export function RecipeGrid() {
   const [randomMeals, setRandomMeals] = useState<Meal[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,12 +28,25 @@ export function RecipeGridLayout() {
   }, []);
 
   if (loading) {
-    return <div>Carregando receitas aleatórias...</div>;
+    return (
+      <div className="space-y-6 py-12">
+        <h2 className="font-bold text-xl">Receitas</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 12 }).map((_, index) => (
+            <div key={index} className="border rounded-lg p-4 shadow-md">
+              <Skeleton height={160} className="mb-2" />
+              <Skeleton width="80%" height={24} />
+              <Skeleton width="60%" height={16} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="space-y-6 py-12">
-      <h2 className="font-bold text-xl">Receitas Aleatórias</h2>
+      <h2 className="font-bold text-xl">Receitas</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {randomMeals.map((meal) => (
           <Link key={meal.idMeal} to={`/recipe/${meal.idMeal}`}>
