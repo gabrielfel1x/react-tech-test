@@ -9,9 +9,9 @@ Este projeto é uma aplicação de receitas culinárias desenvolvida com Vite, R
 - [Dependências](#dependências)
 - [Estrutura de Pastas](#estrutura-de-pastas)
 - [Configuração do Projeto](#configuração-do-projeto)
+- [Instruções de Uso](#instruções-de-uso)
 - [Componentes e Contextos](#componentes-e-contextos)
 - [API Utilizada](#api-utilizada)
-- [Licença](#licença)
 
 ## Funcionalidades
 
@@ -91,6 +91,20 @@ npm run dev
 ```
 
 Abra [http://localhost:5173](http://localhost:5173) com o seu navegador para ver o resultado.
+
+## Instruções de Uso
+
+Para utilizar o **Recipes Explorer**, siga estas instruções:
+
+1. **Pesquisar Receitas**: Na página inicial, você pode pesquisar receitas digitando o nome de uma receita específica. Utilize o campo de busca para encontrar receitas que correspondam ao termo pesquisado.
+
+2. **Explorar Categorias**: Na página de categorias, selecione uma categoria específica para visualizar receitas dentro daquele tema culinário. Você pode usar os filtros de categoria para ajustar os resultados de busca na página inicial.
+
+3. **Salvar Receitas**: Ao encontrar uma receita de interesse, clique no ícone de favorito para salvar essa receita. As receitas salvas são armazenadas localmente e podem ser acessadas na página de receitas salvas.
+
+4. **Alternar Temas**: Utilize o botão de alternância de tema no cabeçalho para trocar entre os temas claro e escuro, conforme sua preferência.
+
+5. **Ver Detalhes da Receita**: Em qualquer receita listada, clique para abrir e visualizar detalhes completos, incluindo ingredientes e o modo de preparo.
 
 ## Componentes e Contextos
 
