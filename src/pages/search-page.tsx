@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useQueryState } from "nuqs";
 import useDebounceValue from "../hooks/use-debounce";
 import {
   getMealByName,
@@ -14,13 +15,16 @@ import { useSavedRecipes } from "../hooks/use-save";
 
 export default function SearchPage() {
   const { savedRecipes, saveRecipe, removeRecipe } = useSavedRecipes();
-  const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState<MealCategory[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [meals, setMeals] = useState<Meal[]>([]);
   const [suggestions, setSuggestions] = useState<Meal[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [searchTerm, setSearchTerm] = useQueryState("search", {
+    defaultValue: "",
+  });
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const debouncedSearchTerm = useDebounceValue(searchTerm, 500);
   const debouncedSelectedCategories = useDebounceValue(selectedCategories, 500);
@@ -39,9 +43,9 @@ export default function SearchPage() {
   }, []);
 
   useEffect(() => {
-    const fetchSuggestions = async () => {
-      if (!debouncedSearchTerm && !debouncedSelectedCategories.length) {
-        setLoading(true);
+    if (!debouncedSearchTerm && !debouncedSelectedCategories.length) {
+      setLoading(true);
+      const fetchSuggestions = async () => {
         try {
           const randomMeals = await getRandomMeals(12);
           setSuggestions(randomMeals);
@@ -52,9 +56,9 @@ export default function SearchPage() {
         } finally {
           setLoading(false);
         }
-      }
-    };
-    fetchSuggestions();
+      };
+      fetchSuggestions();
+    }
   }, [debouncedSearchTerm, debouncedSelectedCategories]);
 
   useEffect(() => {
