@@ -4,14 +4,16 @@ import { getMealDetailsById } from "../services/meal-service";
 import { Meal } from "../types/meal";
 import ExpandableCard from "../components/expandable-card";
 import IngredientList from "../components/ingredient-list";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import ClipLoaderComponent from "../components/loaders/clip";
 import IconButton from "../components/button";
+import { useSavedRecipes } from "../hooks/use-save";
 
 export default function RecipeDetail() {
   const { id } = useParams<{ id: string }>();
   const [meal, setMeal] = useState<Meal | null>(null);
   const [loading, setLoading] = useState(true);
+  const { savedRecipes, saveRecipe, removeRecipe } = useSavedRecipes();
 
   useEffect(() => {
     const fetchMealDetails = async () => {
@@ -44,6 +46,18 @@ export default function RecipeDetail() {
     );
   }
 
+  const isRecipeSaved = savedRecipes.some(
+    (savedMeal) => savedMeal.idMeal === meal.idMeal
+  );
+
+  const handleToggleSave = () => {
+    if (isRecipeSaved) {
+      removeRecipe(meal.idMeal);
+    } else {
+      saveRecipe(meal);
+    }
+  };
+
   const instructionsAsSteps = meal.strInstructions
     ? meal.strInstructions.split(". ").map((step) => `${step}`)
     : [];
@@ -54,7 +68,7 @@ export default function RecipeDetail() {
         <IconButton
           icon={faArrowLeft}
           onClick={() => window.history.back()}
-          className="absolute top-4 left-4 z-10 bg-secondary hover:bg-card hover:scale-110 transition-transform duration-200 ease-in-out"
+          className="absolute top-4 left-4 z-10 bg-white hover:bg-card hover:scale-110 transition-transform duration-200 ease-in-out"
           iconClassName="text-primary"
         />
         <img
@@ -66,16 +80,23 @@ export default function RecipeDetail() {
         <h1 className="absolute bottom-6 left-6 text-4xl font-bold text-white">
           {meal.strMeal}
         </h1>
+        <IconButton
+          icon={faBookmark}
+          onClick={handleToggleSave}
+          className={`absolute bottom-6 right-6 text-4xl bg-white shadow-md ${
+            isRecipeSaved ? "text-primary" : "text-muted-foreground"
+          } hover:scale-110 transition-transform duration-200 ease-in-out`}
+        />
       </div>
 
       <div className="max-w-4xl mx-auto px-4 mt-4">
         <div className="bg-card rounded-xl shadow-sm p-6 md:p-8">
           <div className="flex flex-wrap gap-6 mb-8 text-secondary">
-            <div className="flex items-center gap-2 text-primary-foreground">
+            <div className="flex items-center gap-2 text-foreground">
               <span className="font-semibold text-primary">Category:</span>
               {meal.strCategory}
             </div>
-            <div className="flex items-center gap-2 text-primary-foreground">
+            <div className="flex items-center gap-2 text-foreground">
               <span className="font-semibold text-primary">Area:</span>
               {meal.strArea}
             </div>
