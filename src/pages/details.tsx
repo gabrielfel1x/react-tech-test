@@ -1,3 +1,4 @@
+// pagina de detalhes da receita
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMealDetailsById } from "../services/meal-service";
@@ -46,11 +47,13 @@ export default function RecipeDetail() {
     );
   }
 
+  // essa function verifica se a receita já foi salva
   const isRecipeSaved = savedRecipes.some(
     (savedMeal) => savedMeal.idMeal === meal.idMeal
   );
 
   const handleToggleSave = () => {
+    // aqui alterna entre salvar e remover a receita
     if (isRecipeSaved) {
       removeRecipe(meal.idMeal);
     } else {

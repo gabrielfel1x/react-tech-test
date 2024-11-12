@@ -1,3 +1,4 @@
+// permite ao usuário filtrar receitas por categoria, gerando um conjunto de checkboxes
 import { MealCategory } from "../types/meal";
 
 type CategoryFilterProps = {

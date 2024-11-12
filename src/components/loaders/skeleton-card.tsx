@@ -1,3 +1,4 @@
+// loader skeleton (mostra o esqueleto de um card enquanto os renderiza)
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 

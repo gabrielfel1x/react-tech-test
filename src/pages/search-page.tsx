@@ -1,104 +1,35 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQueryState } from "nuqs";
-import useDebounceValue from "../hooks/use-debounce";
-import {
-  getMealByName,
-  getMealCategories,
-  getRandomMeals,
-} from "../services/meal-service";
-import { Meal, MealCategory } from "../types/meal";
+import useFetchCategories from "../hooks/use-fetch-categories";
+import useFetchMeals from "../hooks/use-fetch-meals";
 import SearchInput from "../components/search-input";
 import CategoryFilter from "../components/category-filter";
 import MealList from "../components/meal-list";
 import ErrorMessage from "../components/error-message";
 import { useSavedRecipes } from "../hooks/use-save";
+import { Meal } from "../types/meal";
 
 export default function SearchPage() {
   const { savedRecipes, saveRecipe, removeRecipe } = useSavedRecipes();
-  const [categories, setCategories] = useState<MealCategory[]>([]);
-  const [meals, setMeals] = useState<Meal[]>([]);
-  const [suggestions, setSuggestions] = useState<Meal[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { categories, error: categoryError } = useFetchCategories();
 
+  // state do nuqs para o termo de busca, sincronizado na URL
   const [searchTerm, setSearchTerm] = useQueryState("search", {
     defaultValue: "",
   });
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const debouncedSearchTerm = useDebounceValue(searchTerm, 500);
-  const debouncedSelectedCategories = useDebounceValue(selectedCategories, 500);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const fetchedCategories = await getMealCategories();
-        setCategories(fetchedCategories);
-      } catch (err) {
-        setError("Failed to fetch categories.");
-        console.error(err);
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    if (!debouncedSearchTerm && !debouncedSelectedCategories.length) {
-      setLoading(true);
-      const fetchSuggestions = async () => {
-        try {
-          const randomMeals = await getRandomMeals(12);
-          setSuggestions(randomMeals);
-          setMeals(randomMeals);
-        } catch (err) {
-          setError("Failed to fetch suggestions.");
-          console.error(err);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchSuggestions();
-    }
-  }, [debouncedSearchTerm, debouncedSelectedCategories]);
-
-  useEffect(() => {
-    if (!debouncedSearchTerm && !debouncedSelectedCategories.length) {
-      setMeals([]);
-      return;
-    }
-
-    const fetchMeals = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const fetchedMeals = await getMealByName(debouncedSearchTerm);
-        const filteredMeals = debouncedSelectedCategories.length
-          ? fetchedMeals.filter((meal) =>
-              debouncedSelectedCategories.includes(meal.strCategory)
-            )
-          : fetchedMeals;
-
-        setMeals(filteredMeals);
-        if (!filteredMeals.length) {
-          setError("No recipes matching your search were found.");
-        }
-      } catch (err) {
-        setError("No recipes matching your search were found.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMeals();
-  }, [debouncedSearchTerm, debouncedSelectedCategories]);
+  // aqui busca as receitas com base nos filtros de busca e categorias selecionadas
+  const { meals, suggestions, loading, error } = useFetchMeals({
+    searchTerm,
+    selectedCategories,
+  });
 
   const handleToggleSave = (meal: Meal) => {
+    // verifica se a receita já foi salva, usando o `idMeal` como identificador único
     const isSaved = savedRecipes.some(
       (savedMeal) => savedMeal.idMeal === meal.idMeal
     );
-
     if (isSaved) {
       removeRecipe(meal.idMeal);
     } else {
@@ -118,6 +49,7 @@ export default function SearchPage() {
           categories={categories}
           selectedCategories={selectedCategories}
           onCategoryChange={(categoryId) =>
+            // atualiza as categorias selecionadas, adicionando/removendo o `categoryId`
             setSelectedCategories((prev) =>
               prev.includes(categoryId)
                 ? prev.filter((id) => id !== categoryId)
@@ -126,7 +58,9 @@ export default function SearchPage() {
           }
         />
       </div>
-      {error && <ErrorMessage message={error} />}
+      {(error || categoryError) && (
+        <ErrorMessage message={error || (categoryError as never)} />
+      )}
       <MealList
         meals={meals}
         suggestions={suggestions}

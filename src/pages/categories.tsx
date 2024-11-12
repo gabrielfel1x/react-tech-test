@@ -1,29 +1,9 @@
-import { useEffect, useState } from "react";
-import { getMealCategories } from "../services/meal-service";
-import { MealCategory } from "../types/meal";
 import { SkeletonCard } from "../components/loaders/skeleton-card";
+import CategoryCard from "../components/category-card";
+import useFetchCategories from "../hooks/use-fetch-categories";
 
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState<MealCategory[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      setLoading(true);
-      try {
-        const fetchedCategories = await getMealCategories();
-        setCategories(fetchedCategories);
-      } catch (err) {
-        setError("Failed to fetch categories.");
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  const { categories, loading, error } = useFetchCategories();
 
   return (
     <section className="py-12 bg-background">
@@ -47,22 +27,7 @@ export default function CategoriesPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
           {categories.map((category) => (
-            <div
-              key={category.idCategory}
-              className="p-4 border border-border bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-            >
-              <img
-                src={category.strCategoryThumb}
-                alt={category.strCategory}
-                className="w-full h-40 object-cover rounded-md mb-4"
-              />
-              <h3 className="text-lg font-semibold text-foreground">
-                {category.strCategory}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {category.strCategoryDescription.slice(0, 100)}...
-              </p>
-            </div>
+            <CategoryCard key={category.idCategory} category={category} />
           ))}
         </div>
       )}

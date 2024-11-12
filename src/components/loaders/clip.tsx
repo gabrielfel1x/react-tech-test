@@ -1,3 +1,4 @@
+// loader animado (snipper)
 import { ClipLoader } from "react-spinners";
 
 export default function ClipLoaderComponent({

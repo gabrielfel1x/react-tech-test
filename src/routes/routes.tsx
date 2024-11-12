@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Layout from "../components/layout";
+import Layout from "../layouts/layout";
 import Home from "../pages/home";
 import RecipeDetail from "../pages/details";
 import { SavedRecipesGrid } from "../components/saved-recipes-grid";
