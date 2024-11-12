@@ -1,4 +1,4 @@
-// exibe mensagem de erro customizável e um ícone de alerta
+// componente que exibe mensagem de erro customizável e um ícone de alerta
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
