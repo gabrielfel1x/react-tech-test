@@ -5,6 +5,7 @@ import {
   getMealByName,
   getMealCategories,
   getRandomMeals,
+  getMealsByCategory, // Importação adicionada
 } from "../services/meal-service";
 import { Meal, MealCategory } from "../types/meal";
 import SearchInput from "../components/search-input";
@@ -26,10 +27,12 @@ export default function SearchPage() {
   });
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
+  // aplica meu hook de debounce nos termos de busca e nas categorias selecionadas
   const debouncedSearchTerm = useDebounceValue(searchTerm, 500);
   const debouncedSelectedCategories = useDebounceValue(selectedCategories, 500);
 
   useEffect(() => {
+    // típica função assíncrona de busca de refeições com filtro por termo de busca e categoria
     const fetchCategories = async () => {
       try {
         const fetchedCategories = await getMealCategories();
@@ -72,15 +75,22 @@ export default function SearchPage() {
       setError(null);
 
       try {
-        const fetchedMeals = await getMealByName(debouncedSearchTerm);
-        const filteredMeals = debouncedSelectedCategories.length
-          ? fetchedMeals.filter((meal) =>
-              debouncedSelectedCategories.includes(meal.strCategory)
-            )
-          : fetchedMeals;
+        let fetchedMeals: Meal[] = [];
+        if (debouncedSelectedCategories.length) {
+          // aqui busca as refeições de acordo com as categorias selecionadas
+          const mealsByCategoryPromises = debouncedSelectedCategories.map(
+            (category) => getMealsByCategory(category)
+          );
+          const mealsByCategory = await Promise.all(mealsByCategoryPromises);
+          // aqui junta todos os resultados das categorias
+          fetchedMeals = mealsByCategory.flat();
+        } else {
+          // e aqui realiza a busca por nome quando não há categoria selecionada
+          fetchedMeals = await getMealByName(debouncedSearchTerm);
+        }
 
-        setMeals(filteredMeals);
-        if (!filteredMeals.length) {
+        setMeals(fetchedMeals);
+        if (!fetchedMeals.length) {
           setError("No recipes matching your search were found.");
         }
       } catch (err) {
@@ -114,14 +124,19 @@ export default function SearchPage() {
       <p className="text-center text-muted-foreground">For your taste</p>
       <div className="container max-w-2xl mx-auto mt-4">
         <SearchInput searchTerm={searchTerm} onChange={setSearchTerm} />
+        {/* filtro de categorias que permite ao usuário selecionar categorias para filtrar as receitas.
+          as categorias são passadas como prop para o componente `CategoryFilter`.
+          `selectedCategories` controla as categorias selecionadas pelo user,
+          e `onCategoryChange` altera as categorias selecionadas ao marcar/desmarcar os checkboxes */}
         <CategoryFilter
           categories={categories}
           selectedCategories={selectedCategories}
           onCategoryChange={(categoryId) =>
-            setSelectedCategories((prev) =>
-              prev.includes(categoryId)
-                ? prev.filter((id) => id !== categoryId)
-                : [...prev, categoryId]
+            setSelectedCategories(
+              (prev) =>
+                prev.includes(categoryId)
+                  ? prev.filter((id) => id !== categoryId) // remove a categoria se já estiver selecionada
+                  : [...prev, categoryId] // adiciona a categoria se não estiver selecionada
             )
           }
         />

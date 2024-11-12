@@ -2,7 +2,6 @@ import api from "./api";
 import { Meal, MealCategory } from "../types/meal";
 import {
   GET_MEAL_BY_NAME,
-  GET_MEAL_BY_FIRST_lETTER,
   GET_MEAL_DETAILS_BY_ID,
   GET_RANDOM_MEAL,
   GET_MEAL_CATEGORIES,
@@ -11,11 +10,6 @@ import {
 
 export const getMealByName = async (name: string): Promise<Meal[]> => {
   const response = await api.get(GET_MEAL_BY_NAME(name));
-  return response.data.meals;
-};
-
-export const getMealByFirstLetter = async (letter: string): Promise<Meal[]> => {
-  const response = await api.get(GET_MEAL_BY_FIRST_lETTER(letter));
   return response.data.meals;
 };
 
