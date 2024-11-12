@@ -1,3 +1,5 @@
+// componente de cartão expansível
+// permite ao usuário expandir ou recolher o conteúdo qnd clicar no cabeçalho
 import { faCompress, faExpand } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, ReactNode } from "react";
@@ -8,8 +10,10 @@ interface ExpandableCardProps {
 }
 
 const ExpandableCard: React.FC<ExpandableCardProps> = ({ title, content }) => {
+  // estado para controlar se o conteúdo tá expandido
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // alterna o estado de expansão qnd clicar
   const toggleExpand = () => {
     setIsExpanded((prev) => !prev);
   };

@@ -1,3 +1,4 @@
+// componente de entrada de pesquisa usado no hero
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,6 +18,7 @@ export default function SearchInput({
         placeholder="search recipes by name..."
         value={searchTerm}
         onChange={(e) => onChange(e.target.value)}
+        // dispara o evento de mudança ao atualizar o valor de entrada
         className="w-full px-4 py-3 pl-12 rounded-lg border border-border focus:ring-2 focus:ring-primary-foreground focus:border-primary-foreground outline-none text-foreground bg-card"
       />
       <FontAwesomeIcon
