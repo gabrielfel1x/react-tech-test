@@ -21,7 +21,7 @@ const ExpandableCard: React.FC<ExpandableCardProps> = ({ title, content }) => {
         onClick={toggleExpand}
       >
         <h2 className="text-xl font-bold text-primary">{title}</h2>
-        <span className="text-muted-foreground">
+        <span className="text-muted-foreground hover:scale-110 transition-transform duration-200 ease-in-out">
           {isExpanded ? (
             <FontAwesomeIcon icon={faExpand} />
           ) : (

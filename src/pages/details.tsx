@@ -56,7 +56,7 @@ export default function RecipeDetail() {
         <IconButton
           icon={faArrowLeft}
           onClick={() => window.history.back()}
-          className="absolute top-4 left-4 z-10 bg-secondary hover:bg-card"
+          className="absolute top-4 left-4 z-10 bg-secondary hover:bg-card hover:scale-110 transition-transform duration-200 ease-in-out"
           iconClassName="text-primary"
         />
         <img
@@ -99,7 +99,7 @@ export default function RecipeDetail() {
                       <div className="flex-shrink-0 w-8 h-8 bg-orange-100 text-primary rounded-full flex items-center justify-center font-semibold">
                         {index + 1}
                       </div>
-                      <p className="text-gray-700 leading-relaxed">{step}</p>
+                      <p className="text-foreground leading-relaxed">{step}</p>
                     </li>
                   ))}
                 </ul>
