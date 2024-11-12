@@ -1,8 +1,18 @@
 import { MealCategory } from "../types/meal";
+import { useNavigate } from "react-router-dom";
 
 export default function CategoryCard({ category }: { category: MealCategory }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/category/${category.strCategory}`);
+  };
+
   return (
-    <div className="p-4 border border-border bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+    <div
+      onClick={handleClick}
+      className="p-4 border border-border bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+    >
       <img
         src={category.strCategoryThumb}
         alt={category.strCategory}

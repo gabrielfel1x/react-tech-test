@@ -8,7 +8,7 @@ import IngredientList from "../components/ingredient-list";
 import { faArrowLeft, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import ClipLoaderComponent from "../components/loaders/clip";
 import IconButton from "../components/button";
-import { useSavedRecipes } from "../hooks/use-save";
+import { useSavedRecipes } from "../hooks/useSave";
 
 export default function RecipeDetail() {
   const { id } = useParams<{ id: string }>();

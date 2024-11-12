@@ -5,7 +5,7 @@ import {
   getRandomMeals,
 } from "../services/meal-service";
 import { Meal } from "../types/meal";
-import useDebounceValue from "./use-debounce";
+import useDebounceValue from "./useDebounce";
 
 interface UseFetchMealsOptions {
   searchTerm: string;

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useSavedRecipes } from "../hooks/use-save";
+import { useSavedRecipes } from "../hooks/useSave";
 import IconButton from "./button";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 

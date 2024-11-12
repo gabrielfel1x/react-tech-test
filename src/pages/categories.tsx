@@ -1,6 +1,6 @@
 import { SkeletonCard } from "../components/loaders/skeleton-card";
 import CategoryCard from "../components/category-card";
-import useFetchCategories from "../hooks/use-fetch-categories";
+import useFetchCategories from "../hooks/useFetchCategories";
 
 export default function CategoriesPage() {
   const { categories, loading, error } = useFetchCategories();
