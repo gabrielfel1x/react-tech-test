@@ -5,6 +5,7 @@ import Home from "../pages/home";
 import RecipeDetail from "../pages/details";
 import { SavedRecipesGrid } from "../components/saved-recipes-grid";
 import CategoriesPage from "../pages/categories";
+import CategoryMealsPage from "../pages/category-meals-page";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { path: "/recipe/:id", element: <RecipeDetail /> },
       { path: "/favorites", element: <SavedRecipesGrid /> },
       { path: "/categories", element: <CategoriesPage /> },
+      { path: "/category/:categoryName", element: <CategoryMealsPage /> },
     ],
   },
 ]);

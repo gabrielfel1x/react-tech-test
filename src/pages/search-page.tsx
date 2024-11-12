@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useQueryState } from "nuqs";
-import useFetchCategories from "../hooks/use-fetch-categories";
-import useFetchMeals from "../hooks/use-fetch-meals";
+import useFetchCategories from "../hooks/useFetchCategories";
+import useFetchMeals from "../hooks/useFetchMeals";
 import SearchInput from "../components/search-input";
 import CategoryFilter from "../components/category-filter";
 import MealList from "../components/meal-list";
 import ErrorMessage from "../components/error-message";
-import { useSavedRecipes } from "../hooks/use-save";
+import { useSavedRecipes } from "../hooks/useSave";
 import { Meal } from "../types/meal";
 
 export default function SearchPage() {

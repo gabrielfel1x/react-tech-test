@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { SkeletonCard } from "./loaders/skeleton-card";
 
-type MealListProps = {
+interface MealListProps {
   meals: Meal[];
-  suggestions: Meal[];
+  suggestions?: Meal[];
+  loading?: boolean;
   savedRecipes: Meal[];
-  loading: boolean;
   onToggleSave: (meal: Meal) => void;
-};
+}
 
 export default function MealList({
   meals = [],
