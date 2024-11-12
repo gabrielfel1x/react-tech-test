@@ -1,24 +1,46 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBowlFood } from "@fortawesome/free-solid-svg-icons/faBowlFood";
+import { Link, useLocation } from "react-router-dom";
+import ThemeToggle from "./theme-toggle";
 
 export default function Header() {
+  const location = useLocation();
+
   return (
     <header>
-      <div className="container flex flex-row items-center justify-between py-4 mx-auto border-b">
-        <a href={"/"} className="font-bold text-2xl">
-          Receitas
-        </a>
-        <a
-          href={"http://github.com/gabrielfel1x"}
-          target="_blank"
-          className="absolute left-2/4"
-        >
-          <img src="github.svg" alt="github" width={34} height={34} />
-        </a>
-        <nav className="flex gap-2 *:rounded-md *:font-semibold items-center">
-          <button className="flex items-center">
-            <FontAwesomeIcon icon={faBowlFood} className="size-8" />
-          </button>
+      <div className="container flex flex-row items-center sm:justify-between justify-center py-4 mx-auto border-b">
+        <h1 className="font-extrabold text-md sm:text-2xl sm:block hidden">
+          Culinary Recipes
+        </h1>
+
+        <nav className="flex gap-6 items-center">
+          <ThemeToggle />
+          <Link
+            to="/"
+            className={`text-md font-semibold transition-all duration-200 ease-in-out ${
+              location.pathname === "/" ? "text-primary" : "text-foreground"
+            } hover:opacity-80`}
+          >
+            Home
+          </Link>
+          <Link
+            to="/categories"
+            className={`text-md font-semibold transition-all duration-200 ease-in-out ${
+              location.pathname === "/categories"
+                ? "text-primary"
+                : "text-foreground"
+            } hover:opacity-80`}
+          >
+            Categories
+          </Link>
+          <Link
+            to="/favorites"
+            className={`flex items-center gap-2 p-2 rounded-sm text-md font-semibold transition-all duration-200 ease-in-out ${
+              location.pathname === "/favorites"
+                ? "text-primary"
+                : "text-foreground"
+            } hover:opacity-80`}
+          >
+            Favorites
+          </Link>
         </nav>
       </div>
     </header>
