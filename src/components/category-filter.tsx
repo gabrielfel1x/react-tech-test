@@ -23,7 +23,7 @@ export default function CategoryFilter({
               type="checkbox"
               checked={selectedCategories.includes(category.strCategory)}
               onChange={() => onCategoryChange(category.strCategory)}
-              className="appearance-none w-5 h-5 border-2 border-border rounded-sm bg-transparent checked:bg-primary checked:border-primary focus:outline-none focus:ring-2 focus:ring-ring transition-all"
+              className="appearance-none cursor-pointer w-5 h-5 border-2 border-input rounded-sm bg-transparent checked:bg-primary checked:border-primary focus:outline-none focus:ring-2 focus:ring-ring transition-all"
             />
             <span className="text-sm text-card-foreground">
               {category.strCategory}

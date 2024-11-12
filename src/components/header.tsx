@@ -6,8 +6,10 @@ export default function Header() {
 
   return (
     <header>
-      <div className="container flex flex-row items-center justify-between py-4 mx-auto border-b">
-        <h1 className="font-extrabold text-md sm:text-2xl">Culinary Recipes</h1>
+      <div className="container flex flex-row items-center sm:justify-between justify-center py-4 mx-auto border-b">
+        <h1 className="font-extrabold text-md sm:text-2xl sm:block hidden">
+          Culinary Recipes
+        </h1>
 
         <nav className="flex gap-6 items-center">
           <ThemeToggle />
