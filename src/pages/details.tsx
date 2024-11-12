@@ -45,9 +45,7 @@ export default function RecipeDetail() {
   }
 
   const instructionsAsSteps = meal.strInstructions
-    ? meal.strInstructions
-        .split(". ")
-        .map((step, index) => `${index + 1}. ${step}`)
+    ? meal.strInstructions.split(". ").map((step) => `${step}`)
     : [];
 
   return (
@@ -65,7 +63,7 @@ export default function RecipeDetail() {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        <h1 className="absolute bottom-6 left-6 text-4xl font-bold text-foreground">
+        <h1 className="absolute bottom-6 left-6 text-4xl font-bold text-white">
           {meal.strMeal}
         </h1>
       </div>
