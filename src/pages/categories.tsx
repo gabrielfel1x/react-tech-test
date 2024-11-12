@@ -26,8 +26,10 @@ export default function CategoriesPage() {
   }, []);
 
   return (
-    <section className="py-12">
-      <h1 className="text-4xl font-bold text-center">Explore Categories</h1>
+    <section className="py-12 bg-background">
+      <h1 className="text-4xl font-bold text-center text-foreground">
+        Explore Categories
+      </h1>
       <p className="text-center text-muted-foreground">
         Discover your favorite cuisine
       </p>
@@ -47,15 +49,17 @@ export default function CategoriesPage() {
           {categories.map((category) => (
             <div
               key={category.idCategory}
-              className="p-4 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+              className="p-4 border border-border bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
             >
               <img
                 src={category.strCategoryThumb}
                 alt={category.strCategory}
                 className="w-full h-40 object-cover rounded-md mb-4"
               />
-              <h3 className="text-lg font-semibold">{category.strCategory}</h3>
-              <p className="text-sm text-muted">
+              <h3 className="text-lg font-semibold text-foreground">
+                {category.strCategory}
+              </h3>
+              <p className="text-sm text-muted-foreground">
                 {category.strCategoryDescription.slice(0, 100)}...
               </p>
             </div>

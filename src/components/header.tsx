@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import ThemeToggle from "./theme-toggle";
 
 export default function Header() {
   const location = useLocation();
@@ -9,9 +10,10 @@ export default function Header() {
         <h1 className="font-extrabold text-md sm:text-2xl">Culinary Recipes</h1>
 
         <nav className="flex gap-6 items-center">
+          <ThemeToggle />
           <Link
             to="/"
-            className={`text-md font-semibold ${
+            className={`text-md font-semibold transition-all duration-200 ease-in-out ${
               location.pathname === "/" ? "text-primary" : "text-foreground"
             } hover:opacity-80`}
           >
@@ -19,7 +21,7 @@ export default function Header() {
           </Link>
           <Link
             to="/categories"
-            className={`text-md font-semibold ${
+            className={`text-md font-semibold transition-all duration-200 ease-in-out ${
               location.pathname === "/categories"
                 ? "text-primary"
                 : "text-foreground"
@@ -29,7 +31,7 @@ export default function Header() {
           </Link>
           <Link
             to="/favorites"
-            className={`flex items-center gap-2 p-2 rounded-sm text-md font-semibold ${
+            className={`flex items-center gap-2 p-2 rounded-sm text-md font-semibold transition-all duration-200 ease-in-out ${
               location.pathname === "/favorites"
                 ? "text-primary"
                 : "text-foreground"

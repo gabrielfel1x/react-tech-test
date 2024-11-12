@@ -15,7 +15,7 @@ const ExpandableCard: React.FC<ExpandableCardProps> = ({ title, content }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md mt-6">
+    <div className="bg-card p-4 rounded-lg shadow-md mt-6">
       <div
         className="flex justify-between items-center cursor-pointer"
         onClick={toggleExpand}
@@ -30,7 +30,9 @@ const ExpandableCard: React.FC<ExpandableCardProps> = ({ title, content }) => {
         </span>
       </div>
       {isExpanded && (
-        <div className="text-dark-gray mt-4 leading-relaxed">{content}</div>
+        <div className="text-card-foreground mt-4 leading-relaxed">
+          {content}
+        </div>
       )}
     </div>
   );

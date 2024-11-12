@@ -17,11 +17,11 @@ export default function SearchInput({
         placeholder="search recipes by name..."
         value={searchTerm}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-4 py-3 pl-12 rounded-lg border border-input focus:ring-2 focus:ring-primary0 focus:border-primary0 outline-none"
+        className="w-full px-4 py-3 pl-12 rounded-lg border border-border focus:ring-2 focus:ring-primary-foreground focus:border-primary-foreground outline-none text-foreground bg-card"
       />
       <FontAwesomeIcon
         icon={faSearch}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-border"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground"
       />
     </div>
   );

@@ -31,7 +31,7 @@ export default function RecipeDetail() {
   }, [id]);
 
   if (loading) {
-    return <ClipLoaderComponent color="black" size={40} />;
+    return <ClipLoaderComponent color="var(--primary-foreground)" size={40} />;
   }
 
   if (!meal) {
@@ -51,7 +51,7 @@ export default function RecipeDetail() {
     : [];
 
   return (
-    <div className="min-h-screen bg-card pb-12">
+    <div className="min-h-screen bg-background pb-12">
       <div className="relative h-[40vh] md:h-[50vh]">
         <IconButton
           icon={faArrowLeft}
@@ -65,38 +65,42 @@ export default function RecipeDetail() {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        <h1 className="absolute bottom-6 left-6 text-4xl font-bold text-white">
+        <h1 className="absolute bottom-6 left-6 text-4xl font-bold text-foreground">
           {meal.strMeal}
         </h1>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 mt-4">
-        <div className="bg-white rounded-xl shadow-sm p-6 md:p-8">
+        <div className="bg-card rounded-xl shadow-sm p-6 md:p-8">
           <div className="flex flex-wrap gap-6 mb-8 text-secondary">
-            <div className="flex items-center gap-2 text-muted-foreground">
+            <div className="flex items-center gap-2 text-primary-foreground">
               <span className="font-semibold text-primary">Category:</span>
               {meal.strCategory}
             </div>
-            <div className="flex items-center gap-2 text-muted-foreground">
+            <div className="flex items-center gap-2 text-primary-foreground">
               <span className="font-semibold text-primary">Area:</span>
               {meal.strArea}
             </div>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
+            <h2 className="text-2xl font-semibold text-foreground mb-4">
+              Ingredients
+            </h2>
             <IngredientList meal={meal} />
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Instructions</h2>
+            <h2 className="text-2xl font-semibold text-foreground mb-4">
+              Instructions
+            </h2>
             <ExpandableCard
               title="Preparation Instructions"
               content={
                 <ul className="space-y-2">
                   {instructionsAsSteps.map((step, index) => (
                     <li key={index} className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-orange-100 text-primary rounded-full flex items-center justify-center font-semibold">
+                      <div className="flex-shrink-0 w-8 h-8 bg-muted text-primary rounded-full flex items-center justify-center font-semibold">
                         {index + 1}
                       </div>
                       <p className="text-foreground leading-relaxed">{step}</p>

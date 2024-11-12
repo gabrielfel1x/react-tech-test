@@ -55,7 +55,7 @@ export default function MealList({
             className={`absolute bottom-4 right-4 shadow-none ${
               savedRecipes.some((savedMeal) => savedMeal.idMeal === meal.idMeal)
                 ? "text-primary"
-                : "text-input"
+                : "text-muted-foreground"
             } hover:scale-110 transition-transform duration-200 ease-in-out`}
           />
         </div>
